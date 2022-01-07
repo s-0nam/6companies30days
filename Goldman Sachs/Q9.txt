@@ -1,0 +1,46 @@
+// { Driver Code Starts
+#include<bits/stdc++.h> 
+using namespace std; 
+
+ // } Driver Code Ends
+class Solution{   
+public:
+    string printMinNumberForPattern(string S){
+        int mv=3,pi=0; string ans;
+        if(S[0]=='I'){
+            ans.push_back('1'); ans.push_back('2'); pi=1;
+        }
+        else{
+            ans.push_back('2'); ans.push_back('1'); pi=0;
+        }
+        for(int i=1;i<S.size();i++){
+            if(S[i]=='I'){
+                ans.push_back('0'+mv); mv++; pi=i+1;
+            }
+            else{
+                ans.push_back(ans[i]);
+                for(int j=pi;j<=i;j++) ans[j]++;
+                mv++;
+            }
+        }
+        return ans;
+        
+    }
+};
+
+
+// { Driver Code Starts.
+int main() 
+{ 
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string S;
+        cin >> S;
+        Solution ob;
+        cout << ob.printMinNumberForPattern(S) << endl;
+    }
+    return 0; 
+} 
+  // } Driver Code Ends

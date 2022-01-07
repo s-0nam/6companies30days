@@ -1,0 +1,39 @@
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution {
+  public:
+    bool canPair(vector<int> nums, int k) {
+        bool ans=true; multiset<int>s;
+        for(auto i:nums) s.insert(i%k);
+        while(!s.empty()){
+            auto it=s.begin(); s.erase(it);
+            int f=k-*it; f%=k;
+            auto p=s.find(f); //cout<<*it<<' '<<f<<endl;
+            if(p==s.end()) return false;
+            s.erase(p);  
+        }
+        return true;
+    }
+};
+
+// { Driver Code Starts.
+int main() {
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int n, k;
+        cin >> n >> k;
+        vector<int> nums(n);
+        for (int i = 0; i < nums.size(); i++) cin >> nums[i];
+        Solution ob;
+        bool ans = ob.canPair(nums, k);
+        if (ans)
+            cout << "True\n";
+        else
+            cout << "False\n";
+    }
+    return 0;
+}  // } Driver Code Ends

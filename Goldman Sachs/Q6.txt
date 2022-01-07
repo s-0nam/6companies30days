@@ -1,0 +1,8 @@
+class Solution {
+public:
+    string gcdOfStrings(string str1, string str2) {
+        string a=str1,b=str2;
+        return (a+b==b+a?a.substr(0,__gcd(a.size(),b.size())):"");
+        
+    }
+};
