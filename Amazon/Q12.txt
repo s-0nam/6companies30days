@@ -1,0 +1,47 @@
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+
+
+class Solution{
+    public:
+    string colName (long long int n)
+    {
+         string s; 
+        if(n<=26){
+            s.push_back('A'+n-1); return s;
+        }
+        int l=0; long long m=n;
+        while(m) l++,m/=26;
+        if(pow(26,l-1)==n) l--;
+        long long p=26;
+        for(int i=1;i<l;i++){
+            n-=p; p*=26;
+        } 
+        p=pow(26,l-1); 
+        while(p){
+            if(p<26){
+                s.push_back('A'+n-1); break;
+            }
+            int c=n/p; if(c*p==n) c--;
+            s.push_back('A'+c); n-=(p*c);
+            p/=26;
+        }
+        return s;
+    }
+};
+
+// { Driver Code Starts.
+int main()
+{
+    int t; cin >> t;
+    while (t--)
+	{
+		long long int n; cin >> n;
+		Solution ob;
+		cout << ob.colName (n) << '\n';
+	}
+}
+  // } Driver Code Ends

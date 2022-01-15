@@ -1,0 +1,46 @@
+// { Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+// User function Template for C++
+
+class Solution{
+public:
+    int isValid(vector<vector<int>> mat){
+        vector<set<int>>h(9),v(9),c[3]; set<int>s;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                c[i].push_back(s);
+            }
+        }
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(mat[i][j]==0) continue;
+                if(h[i].find(mat[i][j])!=h[i].end()) return 0;
+                if(v[j].find(mat[i][j])!=v[j].end()) return 0;
+                if(c[i/3][j/3].find(mat[i][j])!=c[i/3][j/3].end()) return 0;
+                h[i].insert(mat[i][j]); v[j].insert(mat[i][j]); c[i/3][j/3].insert(mat[i][j]);
+            }
+        }
+        return 1;
+    }
+};
+
+// { Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        vector<vector<int>> mat(9, vector<int>(9, 0));
+        for(int i = 0;i < 81;i++)
+            cin>>mat[i/9][i%9];
+        
+        Solution ob;
+        cout<<ob.isValid(mat)<<"\n";
+    }
+    return 0;
+}  // } Driver Code Ends

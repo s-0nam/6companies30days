@@ -1,0 +1,38 @@
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution {
+	public:
+		string FirstNonRepeating(string A){
+		    string ans; vector<int>ch(26,-1); int n=A.size();
+		    for(int i=0;i<n;i++){
+		        int f=n; 
+		        if(ch[A[i]-'a']==-1) ch[A[i]-'a']=i;
+		        else ch[A[i]-'a']=-2;
+		        for(int j=0;j<26;j++){
+		            if(ch[j]==-2||ch[j]==-1) continue;
+		            else f=min(f,ch[j]);
+		        }
+		        if(f==n) ans.push_back('#');
+		        else ans.push_back(A[f]);
+		    }
+		    return ans;
+		}
+
+};
+
+// { Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		string A;
+		cin >> A;
+		Solution obj;
+		string ans = obj.FirstNonRepeating(A);
+		cout << ans << "\n";
+	}
+	return 0;
+}  // } Driver Code Ends

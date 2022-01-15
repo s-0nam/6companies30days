@@ -1,0 +1,53 @@
+class Solution {
+public:
+    vector<int>g[200]; vector<int> visited,cost; map<int,int>mp;
+    int orangesRotting(vector<vector<int>>& grid) {
+        int m=grid[0].size(),n=grid.size(); visited=vector<int>(200,0); cost=vector<int>(200,1e9);
+        for(int i=0;i<n-1;i++){
+            for(int j=0;j<m-1;j++){
+                int c=m*i+j; g[c].push_back(c+1); g[c+1].push_back(c);
+                g[c+m].push_back(c); g[c].push_back(c+m);  
+            }
+        }
+        int c=m-1;
+        for(int i=0;i<n-1;i++){
+            g[c].push_back(c+m); g[c+m].push_back(c);
+            c+=m;  
+        }
+        c=(m)*(n-1);
+        for(int j=0;j<m-1;j++){
+            g[c].push_back(c+1); g[c+1].push_back(c);
+            c++;  
+        }
+          queue<int>q;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==2){ 
+                    int c=i*m+j; q.push(c); visited[c]=1; cost[c]=0; 
+                }
+            }
+        } c=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                mp[c]=grid[i][j]; c++;
+            }
+        }
+        while(!q.empty()){
+            int cur=q.front(); q.pop(); int c=cost[cur]+1; //cout<<cur<<endl;
+            for(auto i:g[cur]){
+                if(!visited[i]&&mp[i]==1){
+                    cost[i]=min(cost[i],c); visited[i]=1; q.push(i);
+                }
+            }
+        }
+        int ans=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1){
+                    int c=i*m+j; ans=max(ans,cost[c]);
+                }
+            }
+        }if(ans==1e9) ans=-1;
+        return ans;
+    }
+};
