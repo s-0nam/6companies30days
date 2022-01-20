@@ -1,0 +1,60 @@
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution
+{
+	public:
+    //Function to find if the given edge is a bridge in graph.
+    int c,d; vector<int>g[100000],visited;
+    int isBridge(int V, vector<int> adj[], int x, int y) 
+    {
+        for(int i=0;i<V;i++) g[i]=adj[i];
+        c=x,d=y;  visited=vector<int>(V,0); dfs(c);
+        for(int i=0;i<V;i++){
+            if(!visited[i]) return 1;
+        }
+        return !visited[d];
+    }
+    void dfs(int v){
+        visited[v]=1; //cout<<v<<endl;
+        for(auto i:g[v]){
+            if((v==c&&i==d)||(v==d&&i==c)) continue;
+            if(!visited[i]){
+                dfs(i);
+            }
+        }
+    }
+};
+
+// { Driver Code Starts.
+
+
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--) {
+        int V, E;
+        cin >> V >> E;
+        vector<int> adj[V];
+        int i=0;
+        while (i++<E) {
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back (v);
+            adj[v].push_back (u);
+        }
+        
+        int c,d;
+        cin>>c>>d;
+        
+        Solution obj;
+    	cout << obj.isBridge(V, adj, c, d) << "\n";
+    }
+
+    return 0;
+}
+
+  // } Driver Code Ends

@@ -1,0 +1,58 @@
+// { Driver Code Starts
+#include <bits/stdc++.h> 
+using namespace std; 
+
+ // } Driver Code Ends
+class Solution
+{   
+    public: 
+    //Function to return a list of integers denoting spiral traversal of matrix.
+    vector<int> spirallyTraverse(vector<vector<int> > matrix, int r, int c) 
+    {
+        vector<int>ans;  int rn=r,cn=c; int mr=r/2,mc=c/2; if(r%2) mr++; if(c%2) mc++;
+        int p=min(mr,mc);
+        for(int i=0;i<p;i++){
+            int cc=0; if(rn==1) cc=cn; else if(cn==1) cc=rn;
+            else cc=2*(rn+cn)-4; int x=i,y=i;
+            while(cc--){
+                ans.push_back(matrix[x][y]);
+                if(x==i&&y<c-1-i) y++;
+                else if(y==c-1-i&&x<r-1-i) x++;
+                else if(x==r-1-i&&y>i) y--;
+                else x--;
+                if(x==i&&y==i) break;
+            }
+            rn-=2,cn-=2;
+        }
+        return ans;
+    }
+};
+
+// { Driver Code Starts.
+int main() {
+    int t;
+    cin>>t;
+    
+    while(t--) 
+    {
+        int r,c;
+        cin>>r>>c;
+        vector<vector<int> > matrix(r); 
+
+        for(int i=0; i<r; i++)
+        {
+            matrix[i].assign(c, 0);
+            for( int j=0; j<c; j++)
+            {
+                cin>>matrix[i][j];
+            }
+        }
+
+        Solution ob;
+        vector<int> result = ob.spirallyTraverse(matrix, r, c);
+        for (int i = 0; i < result.size(); ++i)
+                cout<<result[i]<<" ";
+        cout<<endl;
+    }
+    return 0;
+}  // } Driver Code Ends

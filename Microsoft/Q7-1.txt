@@ -1,0 +1,77 @@
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution
+{
+    public:
+    //Function to find unit area of the largest region of 1s.
+    vector<int>g[250001],visited; int p; map<int,int>mp;
+    int findMaxArea(vector<vector<int>>& grid) {
+        int n=grid.size(),m=grid[0].size(),ans=0; visited=vector<int>(n*m,0);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                mp[i*m+j]=grid[i][j];
+                if(!(i==n-1&&j==m-1)){
+                if(i!=n-1){
+                    g[i*m+j].push_back(i*m+j+m);
+                    g[i*m+j+m].push_back(i*m+j);
+                }
+                if(j!=m-1){
+                    g[i*m+j].push_back(i*m+j+1);
+                    g[i*m+j+1].push_back(i*m+j);
+                }
+                // else{
+                //     g[i*m+j].push_back(i*m+j+1);
+                //     g[i*m+j+1].push_back(i*m+j);
+                //     g[i*m+j].push_back(i*m+j+m);
+                //     g[i*m+j+m].push_back(i*m+j);
+                // }
+                }
+                if(i!=0&&j!=0){
+                    int x=i-1,y=j-1; g[i*m+j].push_back(x*m+y);
+                    g[x*m+y].push_back(i*m+j);
+                }
+                if(j!=0&&i!=n-1){
+                    int x=i+1,y=j-1; g[i*m+j].push_back(x*m+y);
+                    g[x*m+y].push_back(i*m+j);
+                }
+            }
+        }
+        for(int i=0;i<n*m;i++){
+            if(!visited[i]){ //cout<<'m'<<endl;
+                p=0; bfs(i); ans=max(ans,p);
+            }
+        }
+        return ans;
+    }
+    void bfs(int v){ //cout<<v<<endl;
+        visited[v]=1; 
+        if(!mp[v]) return;
+        p++;
+        for(auto i:g[v]){
+            if(!visited[i]) bfs(i);
+        }
+    }
+};
+
+// { Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int n, m;
+		cin >> n >> m;
+		vector<vector<int>>grid(n, vector<int>(m, -1));
+		for(int i = 0; i < n; i++){
+			for(int j = 0; j < m; j++){
+				cin >> grid[i][j];
+			}
+		}
+		Solution obj;
+		int ans = obj.findMaxArea(grid);
+		cout << ans << "\n";
+	}
+	return 0;
+}  // } Driver Code Ends

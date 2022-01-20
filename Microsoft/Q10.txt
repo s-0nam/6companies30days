@@ -1,0 +1,46 @@
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+
+ // } Driver Code Ends
+class Solution
+{
+    public:
+    //Function to find the maximum money the thief can get.
+    vector<int>dp,a; int n;
+    int FindMaxSum(int arr[], int m)
+    {
+        n=m; dp=vector<int>(n,-1); for(int i=0;i<n;i++) a.push_back(arr[i]);
+        return rec(0);
+    }
+    int rec(int i){
+        if(i>=n) return 0;
+        else if(dp[i]!=-1) return dp[i];
+        return dp[i]=max(a[i]+rec(i+2),rec(i+1));
+    }
+};
+
+// { Driver Code Starts.
+int main()
+{
+    //taking total testcases
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    //taking number of houses
+		int n;
+		cin>>n;
+		int a[n];
+		
+		//inserting money of each house in the array
+		for(int i=0;i<n;++i)
+			cin>>a[i];
+		Solution ob;
+		//calling function FindMaxSum()
+		cout<<ob.FindMaxSum(a,n)<<endl;
+	}
+	return 0;
+}
+  // } Driver Code Ends
