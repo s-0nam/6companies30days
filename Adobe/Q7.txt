@@ -1,0 +1,62 @@
+// { Driver Code Starts
+//Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution {
+public:
+vector<int>pr,dp[501],a;
+    int maxCoins(vector<int>&A,int n)
+    {
+	    pr=vector<int>(n+1,0); a.push_back(0);
+	    for(int i=0;i<n;i++) a.push_back(A[i]);
+	    for(int i=0;i<=n;i++) dp[i]=pr;
+	    for(int i=1;i<=n;i++){
+	        pr[i]=pr[i-1]+A[i-1];
+	    }
+	    for(int i=0;i<=n;i++){
+	        for(int j=0;j<=n;j++) dp[i][j]=-1;
+	    }
+	    for(int i=1;i<=n;i++) dp[i][i]=A[i-1];
+	    int ans= rec(1,n,1);
+	   //for(int i=1;i<=n;i++){
+	   //     for(int j=1;j<=n;j++) cout<<dp[i][j]<<' ';
+	   //      cout<<endl;
+	   // }
+	    return ans;
+	    
+    }
+    int rec(int i,int j,int f){
+        if(j<i) return 0;
+        
+        if(f){
+            if(dp[i][j]==-1) dp[i][j]=max(a[i]+rec(i+1,j,0),a[j]+rec(i,j-1,0));
+            return dp[i][j];
+        }
+        else{
+            if(dp[i][j]==-1) dp[i][j]=max(a[i]+rec(i+1,j,0),a[j]+rec(i,j-1,0));
+            return pr[j]-pr[i-1]-dp[i][j];
+        }
+    }
+    
+};
+
+// { Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N;
+        cin >> N;
+        vector<int>A(N);
+        for (int i = 0; i < N; i++) {
+            cin >> A[i];
+        }
+        Solution ob;
+        cout << ob.maxCoins(A, N) << "\n";
+    }
+    return 0;
+}
+  // } Driver Code Ends

@@ -1,0 +1,56 @@
+// { Driver Code Starts
+//Initial Template for C++
+
+#include<bits/stdc++.h> 
+using namespace std; 
+
+
+ // } Driver Code Ends
+//User function Template for C++
+
+class Solution
+{
+  public:
+  long long m=1e9+7;
+    int kvowelwords(int N, int K) {
+        long long dp[N+1][N+1];
+        for(int i=0;i<=N;i++){
+            for(int j=0;j<=N;j++) dp[i][j]=0;
+        }
+        long long b=1; 
+        for(int i=1;i<=N;i++){
+            long long a=1;
+            dp[i][0]=b*21; dp[i][0]%=m; b=dp[i][0];
+            for(int j=1;j<=K;j++){
+                a*=5; a%=m; if(a<0) a+=m;
+                if(j==i){
+                    dp[i][i]=a; if(dp[i][i]<0) dp[i][i]+=m;
+                    b+=dp[i][i]; b%=m; break;
+                }
+                dp[i][j]=dp[i-1][j-1]*5; dp[i][j]%=m; if(dp[i][j]<0) dp[i][j]+=m;
+                b+=dp[i][j]; b%=m;
+            }   
+        }  
+        return b;
+    }
+};
+
+
+// { Driver Code Starts.
+
+
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int N;int K;
+        cin >>N>>K;
+        
+        Solution ob;
+        int ans = ob.kvowelwords(N,K);
+        cout << ans << endl;
+    }
+    return 0;
+}  // } Driver Code Ends
