@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int>a; int s;
+    int check(int m){
+        int c=0;
+        for(auto i:a){
+            c+=(i+m-1)/m;
+        }
+        return c<=s?1:0;
+    }
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int total=0; for(auto i:piles) total=max(total,i);
+        a=piles; s=h;
+        int l=1,r=total,f=0;
+        while(r-l){
+            if(r-l<=1) f=1;
+            int m=(unsigned(l)+unsigned(r))>>1;
+            if(check(m)) r=m;
+            else l=m;
+            if(f) break;
+        }
+        return r;
+    }
+};

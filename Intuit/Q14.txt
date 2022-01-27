@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int n;  
+    int maxDistance(vector<vector<int>>& grid) {
+        n=grid.size(); vector<int>g[n*n],visited(n*n,0),cost(n*n,1e9);
+        queue<int>q;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                int c=i*n+j;
+                if(i){
+                    g[c].push_back(c-n); g[c-n].push_back(c);
+                }
+                if(j){
+                    g[c].push_back(c-1); g[c-1].push_back(c);
+                }
+            }
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]){
+                    cost[i*n+j]=0; q.push(i*n+j); visited[i*n+j]=1;
+                }
+            }
+        }
+        while(!q.empty()){
+            int cur=q.front(); q.pop(); visited[cur]=1;
+            for(auto i:g[cur]){
+                if(!visited[i]){
+                    q.push(i); cost[i]=min(cost[i],cost[cur]+1);
+                }
+            }
+        }
+        int ans= *max_element(cost.begin(),cost.end());
+        if(ans==1e9||ans==0) ans=-1;
+        return ans;
+    } 
+};

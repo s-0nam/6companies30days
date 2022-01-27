@@ -1,0 +1,49 @@
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+const int MAX_DIGITS = 5;
+
+int missingNumber(const string& str);
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string str;
+        cin>>str;
+        cout << missingNumber(str)<<endl;
+    }
+	return 0;
+}
+// } Driver Code Ends
+
+
+/* You are required to complete this function
+which return the required missing number
+if present else return -1*/
+int missingNumber(const string& str)
+{
+    int n=str.size(),found=-1;
+    for(int i=1;i<=min(6,n/2);i++){ 
+        string temp=str.substr(0,i); int ml=i,cur=stoi(temp);
+        while(temp.size()<n){ //cout<<temp<<' '<<i<<endl;
+            cur++; string p=to_string(cur); p=temp+p; if(p.size()>n) break;
+            if(p==str.substr(0,p.size())) ml=p.size(),temp=p;
+            else if(found!=-1){
+                found=-1; break;
+            }
+            else{
+                cur++; string p=to_string(cur); p=temp+p; if(p.size()>n) break;
+                if(p==str.substr(0,p.size())){
+                    found=cur-1; temp=p; ml=temp.size();
+                }
+                else break;
+            }
+        }
+        if(ml==n&&found!=-1) return found;
+        else found=-1;
+    }
+    return found;
+}

@@ -1,0 +1,54 @@
+// { Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution {
+public:
+int n,m,ss; string s; bool f=false;
+    bool isWordExist(vector<vector<char>>& board, string word) {
+      ss=word.size();  s=word; n=board.size(),m=board[0].size();  
+      for(int i=0;i<n;i++){
+          for(int j=0;j<m;j++){
+              if(board[i][j]==word[0]){
+                  vector<int>temp(m,0);
+      vector<vector<int>>vis(n,temp); rec(i,j,0,board,vis);
+              }
+          }
+      } 
+      return f;
+    }
+    void rec(int i,int j,int c,vector<vector<char>>& b,vector<vector<int>> &vis){
+        if(c==ss){
+            f=true; return;
+        }
+        if(i<0||j<0||i==n||j==m||vis[i][j]) return;
+        
+        if(b[i][j]==s[c]){ vis[i][j]=1;
+            c++;  rec(i+1,j,c,b,vis); rec(i-1,j,c,b,vis); rec(i,j+1,c,b,vis); rec(i,j-1,c,b,vis);
+        }
+         
+    }
+};
+
+// { Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int n, m;
+		cin >> n >> m;
+		vector<vector<char>>board(n, vector<char>(m, '*'));
+		for(int i = 0; i < n; i++)
+			for(int j = 0; j < m; j++)
+				cin >> board[i][j];
+		string word;
+		cin >> word;
+		Solution obj;
+		bool ans = obj.isWordExist(board, word);
+		if(ans)
+			cout << "1\n";
+		else cout << "0\n";
+	}
+	return 0;
+}  // } Driver Code Ends
