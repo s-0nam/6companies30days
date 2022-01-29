@@ -1,0 +1,51 @@
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+ // } Driver Code Ends
+
+
+class Solution
+{
+    public:
+    //Function to find the largest number after k swaps.
+    string ans; int n;
+    string findMaximumNum(string str, int k)
+    {
+        n=str.size();
+       rec(k,0,str);
+       return ans;
+    }
+    void rec(int k,int i,string s){
+        if(!k) return;
+        char mx=s[i]; for(int j=i+1;j<n;j++) mx=max(mx,s[j]);
+        if(mx!=s[i]) k--;
+        for(int j=n-1;j>=i;j--){
+            if(s[j]==mx){
+                swap(s[i],s[j]);
+                ans=max(ans,s);
+                rec(k,i+1,s);
+                swap(s[i],s[j]);
+            }
+        }
+    }
+};
+
+// { Driver Code Starts.
+
+int main()
+{
+    int t, k;
+    string str;
+
+    cin >> t;
+    while (t--)
+    {
+        cin >> k >> str;
+        Solution ob;
+        cout<< ob.findMaximumNum(str, k) << endl;
+    }
+    return 0;
+}
+  // } Driver Code Ends

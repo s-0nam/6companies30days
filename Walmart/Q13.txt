@@ -1,0 +1,17 @@
+class Solution {
+public:
+    // bool comp(string a,string b){
+    //     if(a.size()==b.size()) return a>b;
+    //     return a.size()>b.size();
+    // }
+    string kthLargestNumber(vector<string>& nums, int k) {
+        auto comp = [](string a,string b){
+            if(a.size()==b.size()) return a>b;
+        return a.size()>b.size();
+        };
+        sort(nums.begin(),nums.end(),comp); 
+        //reverse(nums.begin(),nums.end());
+        //for(auto i:nums) cout<<i<<endl;
+        return nums[k-1];
+    }
+};

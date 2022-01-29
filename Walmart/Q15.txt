@@ -1,0 +1,26 @@
+#define ll long long unsigned
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        int extra=0;
+        if(dividend==0) return 0;
+        if(divisor==1) return dividend;
+        if(divisor==-1&&dividend==INT_MIN) return INT_MAX;
+        if(divisor==-1) return -1*dividend;
+        if(divisor==INT_MIN&&dividend==INT_MIN) return 1;
+        if(divisor==INT_MIN) return 0;
+        int f=0,quo=1; if((divisor<0&&dividend>0)||(divisor>0&&dividend<0)) f=1;
+        if(dividend==INT_MIN) dividend++,extra=1;
+        divisor=abs(divisor); dividend=abs(dividend);
+        if(divisor-extra>dividend) return 0;
+        dividend-=divisor-extra;
+        while(dividend>=divisor){
+            int mul=1,acc=divisor;
+            while(acc<=dividend-acc){
+                acc<<=1; mul<<=1;
+            }
+            quo+=mul; dividend-=acc;
+        }
+        return f?-quo:quo;
+    }
+};

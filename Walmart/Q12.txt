@@ -1,0 +1,49 @@
+class Solution {
+public: 
+    int ls[20009]={0},ch[20009]={0}; vector<int>ans;
+    vector<int> recoverArray(int n, vector<int>& sums) {
+        sort(sums.begin(),sums.end());
+        ans.clear();
+        rec(sums);         
+        return ans;
+    } 
+     int rec(vector<int>a){
+         int n=a.size();
+         if(n==1) return 0;
+         if(n==2){
+             if(a[0]==0){
+                 ans.push_back(a[1]); return 1;
+             }
+             else if(a[1]==0){
+                 ans.push_back(a[0]); return 1;
+             }
+             return 0;
+         }
+         int x=a[n-1]-a[n-2],u=0; vector<int>f1,f2;
+         for(int i=0;i<n;i++) ls[a[i]+10000]++;
+         for(int i=0;i<n;i++){
+             if(ch[a[i]+10000]>0){
+                 ch[a[i]+10000]--; continue;
+             }
+             int y=a[i];
+             if(ls[y+x+10000]>0){
+                 ls[y+x+10000]--; ls[y+10000]--; ch[x+y+10000]++;
+                 f1.push_back(y); f2.push_back(y+x);
+             }
+             else{
+                 u=1; break;
+             }
+         }
+         for(int i=0;i<n;i++) ls[a[i]+10000]=0,ch[a[i]+10000]=0;
+         if(u) return 0;
+         int x1=rec(f1);
+         if(x1){
+             ans.push_back(x); return 1;
+         }
+         int x2=rec(f2);
+         if(x2){
+             ans.push_back(-1*x); return 1;
+         }
+         return 0;
+     } 
+};
